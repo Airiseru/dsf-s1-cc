@@ -157,10 +157,16 @@ if my_page == 'About the Project':
 elif my_page == "Methodology":
     st.write('___')
     st.subheader("Methodology")
-    st.write("To learn more about")
+    st.markdown("To learn more about the dataset, this page will showcase the data preprocessing done, explore the data through graphs and charts, and showcase how the clustering was done using KMeans. To view the whole code, you can check the [Jupyter Notebook](https://github.com/Airiseru/dsf-s1-cc/blob/main/cc-project-nb.ipynb) for more.")
     st.write("<br>", unsafe_allow_html=True)
+    
     with st.expander("⚙️ **Data Preprocessing**", expanded=True):
-        st.write("wow!")
+        initial_df = pd.read_csv('cc_dirty.csv')
+
+        st.markdown("Shown below is the first 10 rows of the initial dataset:")
+        st.dataframe(initial_df.head(10))
+        st.markdown("To prepreprocess the data, the following steps were done:\n1. Drop duplicate rows and rows with null values\n2. Standardized the `gender` column to only contain `F` or `M`\n3. Removed the dollar ($) sign in the `amt` column and converted it to a `float` datatype\n4. Remove the word 'people' and the comma from the `city_pop` column and then converted it to an integer type\n5. Converted the `dob` and `unix_time` columns to a datetime format\n6. Added columns such as `age`, `generation` of the customer, the hour/month/year of the transaction, and the number of days that has passed since the date of transaction to January 1, 2022 (`elapsed_days`)")
+        st.markdown("\nThus from the initial 100,000 transactions, it was down to 92,432 transactions after cleaning.")
     
     with st.expander("🔍 **Exploratory Data Analysis**", expanded=True):
         st.write("wow!")
