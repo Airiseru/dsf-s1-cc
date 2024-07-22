@@ -171,8 +171,13 @@ elif my_page == "Methodology":
     
     with st.expander("🔍 **Exploratory Data Analysis**", expanded=True):
         st.write("To do an initial exploration of the data, the following were looked at:\n1. Timeline of transaction\n2. Number of account holders (customers)\n3. Gender distribution\n4. Age distribution (based on generation)\n5. City distribution\n6. Categories with the highest number of transactions\n7. Categories with the highest amount spent")
+
+        # Transaction Timeline and Number of Account Holders
         st.markdown("<h4>Transaction Timeline and Number of Account Holders</h4>", unsafe_allow_html=True)
-        # insert the timeline and number of account holders
+        basic_info = {"Transaction Timeline": "January 1, 2020 - December 6, 2021",
+                      "Number of Account Holders": 94}
+        basic_info_df = pd.DataFrame.from_dict(basic_info, orient='index', columns=["Info"])
+        st.table(basic_info_df)
 
         # Gender Distribution Plot
         st.markdown("<h4>Gender Distribution</h4>", unsafe_allow_html=True)
