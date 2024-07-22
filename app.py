@@ -170,7 +170,7 @@ elif my_page == "Methodology":
         st.markdown("\nThus from the initial 100,000 transactions, it was down to 92,432 transactions after cleaning.")
     
     with st.expander("🔍 **Exploratory Data Analysis**", expanded=True):
-        st.write("To do an initial exploration of the data, the following were looked at:\n1. Timeline of transaction\n2. Number of account holders (customers)\n3. Gender distribution\n4. Age distribution (based on generation)\n5. City distribution\n6. Categories with the highest number of transactions\n7. Categories with the highest amount spent")
+        st.write("To do an initial exploration of the data, the following were examined:\n1. Timeline of transaction\n2. Number of account holders (customers)\n3. Gender distribution\n4. Age distribution (based on generation)\n5. City distribution\n6. Categories with the highest number of transactions\n7. Categories with the highest amount spent")
 
         # Transaction Timeline and Number of Account Holders
         st.markdown("<h4>Transaction Timeline and Number of Account Holders</h4>", unsafe_allow_html=True)
@@ -244,8 +244,15 @@ elif my_page == "Methodology":
         st.markdown(f"1. All of the customers of AAC are more on the older generation (50 and above).\n2. Majority of the customers are located in the Luzon area.\n3. Based on the overall transaction history, the customers tend to buy products physically or face-to-face.\n4. The top category in terms of number of transactions and amount spent is `Physical Grocery`. This may indicate that the customers tend to use their cards to buy grocery physically.")
 
     with st.expander("👥 **Clustering**", expanded=True):
-        st.write("wow!")
-    # Create a dropdown for 1) Data Preprocessing 2) EDA 3) Method for Clustering
+        st.write("To cluster the customers into groups, the K-Means algorithm was used. The customers were clustered to further examine the different groups of customers the company had and their specific behaviors. They were grouped based on their recency, frequency, and monetary values.")
+
+        st.markdown("**Definitions**")
+        st.markdown("1. Recency - how many days ago (from January 1, 2022) was the most recent transaction made by the customer?\n2. Frequency - how often does the customer use their credit card (or in total, how many transactions did he/she make)?\n3. Monetary - in total, how much money did the customer spend?")
+
+        st.markdown("**Steps**")
+        st.markdown("1. Scale the values: this was done since the values (especially the monetary) had a wide range of values, which may negatively impact the model.\n2. Running the K-Means algorithm at different number of cluster values (from 2 to 10 clusters)\n3. Selecting the most optimal number of clusters: for this, we used 6 clusters for a more focused exploration of the customers")
+
+        st.markdown("*To see the whole code for generating the clusters, check out the [Jupyter Notebook](https://github.com/Airiseru/dsf-s1-cc/blob/main/cc-project-nb.ipynb)!*")
 
 elif my_page == 'Results':
     st.write('___')
