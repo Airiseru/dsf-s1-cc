@@ -158,7 +158,7 @@ if my_page == 'About the Project':
 elif my_page == "Methodology":
     st.write('___')
     st.subheader("Methodology")
-    st.markdown("To learn more about the dataset, this page will showcase the data preprocessing done, explore the data through graphs and charts, and showcase how the clustering was done using KMeans. To view the whole code, you can check the [Jupyter Notebook](https://github.com/Airiseru/dsf-s1-cc/blob/main/cc-project-nb.ipynb) for more.")
+    st.markdown("To learn more about the dataset, this page will showcase the data preprocessing done, do some initial exploration of the data through graphs and charts, and showcase how the clustering was done using KMeans. To view the whole code, you can check the [Jupyter Notebook](https://github.com/Airiseru/dsf-s1-cc/blob/main/cc-project-nb.ipynb) for more.")
     st.write("<br>", unsafe_allow_html=True)
 
     with st.expander("⚙️ **Data Preprocessing**", expanded=True):
