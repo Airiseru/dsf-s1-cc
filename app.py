@@ -256,6 +256,39 @@ elif my_page == "Methodology":
 
 elif my_page == 'Results':
     st.write('___')
+    st.write("After doing K Means clustering, 6 clusters or groups of customers were formed. The table below summarizes the different groups and their average RFM values.")
+    st.markdown(
+        f"""| Cluster | Recency Value | Frequency Value | Monetary Value |
+| ------- | ------------- | --------------- | -------------- |
+| 0       | Low (316)     | Low (8)         | Low (5,382)    |
+| 1       | High (25)     | High (1,309)    | High (91,383)  |
+| 2       | Medium (124)  | Low (11)        | Low (5,136)    |
+| 3       | High (25)     | Very High (1,957)| Very High (133,899) |
+| 4       | Low (604)     | Low (8)         | Low (4,434)    |
+| 5       | High (25)     | Medium (656)    | Medium (45,917)|"""
+    )
+    st.write("From this, we can observe that clusters 0 and 4 had little to no interaction with the company compared to the other groups. They will be ignored for now as these customers may require more resources to encourage them to use their cards more, which might be unprofitable for the company. As such, no analysis or business recommendations will be done for these clusters for now.")
+
+    st.write("Instead, it is encouraged to focus on increasing the engagement of the consistent customers as they are more beneficial to the company and a greater return on investment.")
+
+    st.subheader("Deep Dive Analysis of the Clusters")
+    st.write("For each cluster, we will be examining their behaviors. Specifically, we will look at how many transactions and users are in the cluster, the age range of the customers, and their average spending per month and per category.")
+
+    # Dropdown for cluster 1
+    with st.expander("🛒 **Cyber Savvy Shoppers** *(cluster 1)*", expanded=False):
+        st.write("cluster")
+    
+    # Dropdown for cluster 2
+    with st.expander("🛒 **Epic Comeback Connoisseurs** *(cluster 2)*", expanded=False):
+        st.write("cluster")
+
+    # Dropdown for cluster 3
+    with st.expander("🛒 **Digital Dynamos** *(cluster 3)*", expanded=False):
+        st.write("cluster")
+    
+    # Dropdown for cluster 5
+    with st.expander("🛒 **Festive Spenders** *(cluster 5)*", expanded=False):
+        st.write("cluster")
     # Create a dropdown for each cluster
 
 elif my_page == "Summary":
