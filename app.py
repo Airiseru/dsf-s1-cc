@@ -247,7 +247,7 @@ elif my_page == "Methodology":
         st.write("To do an initial exploration of the data, the following were examined:\n1. Timeline of transaction\n2. Number of account holders (customers)\n3. Gender distribution\n4. Age distribution (based on generation)\n5. City distribution\n6. Categories with the highest number of transactions\n7. Categories with the highest amount spent")
 
         # Transaction Timeline and Number of Account Holders
-        st.markdown("<h4>Transaction Timeline and Number of Account Holders</h4>", unsafe_allow_html=True)
+        st.markdown("<h4>Transaction Timeline and Number of Account Holders</h4><br>", unsafe_allow_html=True)
         basic_info = {"Transaction Timeline": "January 1, 2020 - December 6, 2021",
                       "Number of Account Holders": 94}
         basic_info_df = pd.DataFrame.from_dict(basic_info, orient='index', columns=["Info"])
@@ -387,6 +387,8 @@ elif my_page == 'Results':
 
         st.markdown("<h4>Catergory Level: Average Spending per Generation</h4>", unsafe_allow_html=True)
         cat_lvl_avg_spending_per_gen(c5_trans, "cluster5-category-avg")
+    
+    st.subheader("Summary of Findings and Recommendations")
 
 elif my_page == "Summary":
     st.write('___')
