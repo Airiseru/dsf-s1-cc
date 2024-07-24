@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import plotly.express as px
+import numpy as np
+import plotly.graph_objects as go
 
 # Constants
 COLOR_RED = "#ce3c1b"
@@ -11,12 +13,49 @@ COLOR_GREEN = "#41916c"
 COLOR_BLUE = "#213875"
 COLORS = [COLOR_RED, COLOR_BLUE, COLOR_GREEN, COLOR_YELLOW, COLOR_LIGHTGREEN]
 PROJ_TITLE = "An Analysis on AAC's Customers and their Spending Behaviors"
+FIG_SIZE = (10, 5)
 
 # Loading the datasets
 unique_holders = pd.read_csv('data/s1_users_csv.csv')
 df_with_label = pd.read_csv('data/s1_final_csv.csv')
 
+# Dividing the categories into physical, digital, or others
+physical_cats = ['grocery_pos', 'gas_transport', 'shopping_pos', 'misc_pos']
+digital_cats = ['grocery_net', 'shopping_net', 'misc_net']
+other_cats = [cat for cat in df_with_label['category'].unique() if cat not in physical_cats and cat not in digital_cats]
+
 # Functions
+def get_category_type(cat):
+    if cat in physical_cats:
+        return "Physical"
+    elif cat in digital_cats:
+        return "Digital"
+    else:
+        return "Others"
+
+def phys_digi_avg_spending_per_gen(df, unique_key):
+    avg_per_gen_type = pd.pivot_table(df, values='amt', index='category_type', columns='generation')
+
+    # Turn the values into whole numbers
+    for cat in avg_per_gen_type.columns:
+        avg_per_gen_type[cat] = avg_per_gen_type[cat].apply(lambda x: np.round(x))
+    
+    # Add the bar charts
+    fig = go.Figure(
+        go.Bar(name='Silent Generation', x=avg_per_gen_type.index, y=avg_per_gen_type['Silent Generation'], marker_color=COLORS[0])
+    )
+
+    fig.add_trace(
+        go.Bar(name='Baby Boomers', x=avg_per_gen_type.index, y=avg_per_gen_type['Baby Boomers'], marker_color=COLORS[1])
+    )
+
+    fig.add_trace(
+        go.Bar(name='Generation X', x=avg_per_gen_type.index, y=avg_per_gen_type['Generation X'], marker_color=COLORS[2])
+    )
+
+    fig.update_layout(barmode='group')
+    st.plotly_chart(fig, key=unique_key)
+
 
 # HTML Styles
 html_styles = f"""
@@ -140,6 +179,9 @@ home_html = f"""
 data_preprocessing_html = f"""
 <h3></h3>
 """
+
+# Update df_with_label
+df_with_label['category_type'] = df_with_label['category'].map(get_category_type)
 
 # Creating the streamlit app
 st.set_page_config(layout='wide')
@@ -276,20 +318,31 @@ elif my_page == 'Results':
 
     # Dropdown for cluster 1
     with st.expander("🛒 **Cyber Savvy Shoppers** *(cluster 1)*", expanded=False):
-        st.write("cluster")
+        st.subheader("Physical vs Digital: Average Spending per Generation")
+        c1_trans = df_with_label[df_with_label['labels'] == 1]
+        c1_users = unique_holders[unique_holders['labels'] == 1]
+        phys_digi_avg_spending_per_gen(c1_trans, "cluster1-digi-vs-phys")
     
     # Dropdown for cluster 2
     with st.expander("🛒 **Epic Comeback Connoisseurs** *(cluster 2)*", expanded=False):
-        st.write("cluster")
+        st.subheader("Physical vs Digital: Average Spending per Generation")
+        c2_trans = df_with_label[df_with_label['labels'] == 2]
+        c2_users = unique_holders[unique_holders['labels'] == 2]
+        phys_digi_avg_spending_per_gen(c2_trans, "cluster2-digi-vs-phys")
 
     # Dropdown for cluster 3
     with st.expander("🛒 **Digital Dynamos** *(cluster 3)*", expanded=False):
-        st.write("cluster")
+        st.subheader("Physical vs Digital: Average Spending per Generation")
+        c3_trans = df_with_label[df_with_label['labels'] == 3]
+        c3_users = unique_holders[unique_holders['labels'] == 3]
+        phys_digi_avg_spending_per_gen(c3_trans, "cluster3-digi-vs-phys")
     
     # Dropdown for cluster 5
     with st.expander("🛒 **Festive Spenders** *(cluster 5)*", expanded=False):
-        st.write("cluster")
-    # Create a dropdown for each cluster
+        st.subheader("Physical vs Digital: Average Spending per Generation")
+        c5_trans = df_with_label[df_with_label['labels'] == 5]
+        c5_users = unique_holders[unique_holders['labels'] == 5]
+        phys_digi_avg_spending_per_gen(c5_trans, "cluster5-digi-vs-phys")
 
 elif my_page == "Summary":
     st.write('___')
