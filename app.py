@@ -57,11 +57,43 @@ def phys_digi_avg_spending_per_gen(df, unique_key):
     st.plotly_chart(fig, key=unique_key)
 
 
+def cat_lvl_avg_spending_per_gen(df, unique_key):
+    avg_per_gen_cat = pd.pivot_table(df, values='amt', index='category', columns='generation')
+
+    # Turn the values into whole numbers
+    for cat in avg_per_gen_cat.columns:
+        avg_per_gen_cat[cat] = avg_per_gen_cat[cat].apply(lambda x: np.round(x))
+
+    # Rename the index (category names)
+    avg_per_gen_cat.index = ['Entertainment', 'Food and Dining', 'Gas Transport', 'Online Grocery', 'Physical Grocery',
+                         'Health and Fitness', 'Home', 'Kids and Pets', 'Online Miscellaneous', 'Physical Miscellaneous',
+                         'No Category', 'Personal Care', 'Online Shopping', 'Physical Shopping', 'Travel']
+
+    # Add the graphs
+    fig = go.Figure(
+        go.Bar(name='Silent Generation', x=avg_per_gen_cat['Silent Generation'], y=avg_per_gen_cat  .index, marker_color=COLORS[0], orientation='h')
+    )
+
+    fig.add_trace(
+        go.Bar(name='Baby Boomers', x=avg_per_gen_cat['Baby Boomers'], y=avg_per_gen_cat.index, marker_color=COLORS[1], orientation='h')
+    )
+
+    fig.add_trace(
+        go.Bar(name='Generation X', x=avg_per_gen_cat['Generation X'], y=avg_per_gen_cat.index, marker_color=COLORS[2], orientation='h')
+    )
+    
+    fig.update_layout(barmode='group')
+    st.plotly_chart(fig, key=unique_key)
+
 # HTML Styles
 html_styles = f"""
 <style>
     h3 {{
         color: {COLOR_RED};
+    }}
+
+    h4 {{
+        padding-bottom: 0;
     }}
 
     p {{
@@ -322,6 +354,9 @@ elif my_page == 'Results':
         c1_trans = df_with_label[df_with_label['labels'] == 1]
         c1_users = unique_holders[unique_holders['labels'] == 1]
         phys_digi_avg_spending_per_gen(c1_trans, "cluster1-digi-vs-phys")
+
+        st.markdown("<h4>Catergory Level: Average Spending per Generation</h4>", unsafe_allow_html=True)
+        cat_lvl_avg_spending_per_gen(c1_trans, "cluster1-category-avg")
     
     # Dropdown for cluster 2
     with st.expander("🛒 **Epic Comeback Connoisseurs** *(cluster 2)*", expanded=False):
@@ -330,12 +365,18 @@ elif my_page == 'Results':
         c2_users = unique_holders[unique_holders['labels'] == 2]
         phys_digi_avg_spending_per_gen(c2_trans, "cluster2-digi-vs-phys")
 
+        st.markdown("<h4>Catergory Level: Average Spending per Generation</h4>", unsafe_allow_html=True)
+        cat_lvl_avg_spending_per_gen(c2_trans, "cluster2-category-avg")
+
     # Dropdown for cluster 3
     with st.expander("🛒 **Digital Dynamos** *(cluster 3)*", expanded=False):
         st.markdown("<h4>Physical vs Digital: Average Spending per Generation</h4>", unsafe_allow_html=True)
         c3_trans = df_with_label[df_with_label['labels'] == 3]
         c3_users = unique_holders[unique_holders['labels'] == 3]
         phys_digi_avg_spending_per_gen(c3_trans, "cluster3-digi-vs-phys")
+
+        st.markdown("<h4>Catergory Level: Average Spending per Generation</h4>", unsafe_allow_html=True)
+        cat_lvl_avg_spending_per_gen(c3_trans, "cluster3-category-avg")
     
     # Dropdown for cluster 5
     with st.expander("🛒 **Festive Spenders** *(cluster 5)*", expanded=False):
@@ -343,6 +384,9 @@ elif my_page == 'Results':
         c5_trans = df_with_label[df_with_label['labels'] == 5]
         c5_users = unique_holders[unique_holders['labels'] == 5]
         phys_digi_avg_spending_per_gen(c5_trans, "cluster5-digi-vs-phys")
+
+        st.markdown("<h4>Catergory Level: Average Spending per Generation</h4>", unsafe_allow_html=True)
+        cat_lvl_avg_spending_per_gen(c5_trans, "cluster5-category-avg")
 
 elif my_page == "Summary":
     st.write('___')
