@@ -318,28 +318,28 @@ elif my_page == 'Results':
 
     # Dropdown for cluster 1
     with st.expander("🛒 **Cyber Savvy Shoppers** *(cluster 1)*", expanded=False):
-        st.subheader("Physical vs Digital: Average Spending per Generation")
+        st.markdown("<h4>Physical vs Digital: Average Spending per Generation</h4>", unsafe_allow_html=True)
         c1_trans = df_with_label[df_with_label['labels'] == 1]
         c1_users = unique_holders[unique_holders['labels'] == 1]
         phys_digi_avg_spending_per_gen(c1_trans, "cluster1-digi-vs-phys")
     
     # Dropdown for cluster 2
     with st.expander("🛒 **Epic Comeback Connoisseurs** *(cluster 2)*", expanded=False):
-        st.subheader("Physical vs Digital: Average Spending per Generation")
+        st.markdown("<h4>Physical vs Digital: Average Spending per Generation</h4>", unsafe_allow_html=True)
         c2_trans = df_with_label[df_with_label['labels'] == 2]
         c2_users = unique_holders[unique_holders['labels'] == 2]
         phys_digi_avg_spending_per_gen(c2_trans, "cluster2-digi-vs-phys")
 
     # Dropdown for cluster 3
     with st.expander("🛒 **Digital Dynamos** *(cluster 3)*", expanded=False):
-        st.subheader("Physical vs Digital: Average Spending per Generation")
+        st.markdown("<h4>Physical vs Digital: Average Spending per Generation</h4>", unsafe_allow_html=True)
         c3_trans = df_with_label[df_with_label['labels'] == 3]
         c3_users = unique_holders[unique_holders['labels'] == 3]
         phys_digi_avg_spending_per_gen(c3_trans, "cluster3-digi-vs-phys")
     
     # Dropdown for cluster 5
     with st.expander("🛒 **Festive Spenders** *(cluster 5)*", expanded=False):
-        st.subheader("Physical vs Digital: Average Spending per Generation")
+        st.markdown("<h4>Physical vs Digital: Average Spending per Generation</h4>", unsafe_allow_html=True)
         c5_trans = df_with_label[df_with_label['labels'] == 5]
         c5_users = unique_holders[unique_holders['labels'] == 5]
         phys_digi_avg_spending_per_gen(c5_trans, "cluster5-digi-vs-phys")
