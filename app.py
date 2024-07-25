@@ -271,10 +271,6 @@ home_html = f"""
 </ul>
 """
 
-data_preprocessing_html = f"""
-<h3></h3>
-"""
-
 # Update df_with_label
 df_with_label['category_type'] = df_with_label['category'].map(get_category_type)
 
