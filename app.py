@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 import numpy as np
 import plotly.graph_objects as go
+import calendar
 
 # Constants
 COLOR_RED = "#ce3c1b"
@@ -83,6 +84,68 @@ def cat_lvl_avg_spending_per_gen(df, unique_key):
     )
     
     fig.update_layout(barmode='group')
+    st.plotly_chart(fig, key=unique_key)
+
+def plot_avg_monthly_spending(df, unique_key):
+    # Filter by Physical or Digital Category
+    physical_trans = df[df['category_type'] == "Physical"].sort_values(by='trans_datetime')
+    physical_trans = physical_trans[['trans_year', 'trans_month', 'amt']] # get specific columns
+    digital_trans = df[df['category_type'] == "Digital"].sort_values(by='trans_datetime')
+    digital_trans = digital_trans[['trans_year', 'trans_month', 'amt']]
+
+    # Filter to transactions made in 2020
+    physical_2020 = physical_trans[physical_trans['trans_year'] == 2020]
+    physical_2020 = physical_2020[['trans_month', 'amt']]
+    digital_2020 = digital_trans[digital_trans['trans_year'] == 2020]
+    digital_2020 = digital_2020[['trans_month', 'amt']]
+
+    # Filter to transactions made in 2021
+    physical_2021 = physical_trans[physical_trans['trans_year'] == 2021]
+    physical_2021 = physical_2021[['trans_month', 'amt']]
+    digital_2021 = digital_trans[digital_trans['trans_year'] == 2021]
+    digital_2021 = digital_2021[['trans_month', 'amt']]
+
+    # Get the average transactions made in 2020
+    phys_trans_data = physical_2020.groupby('trans_month')['amt'].mean().to_frame(name='avg').reset_index() # group the transactions by month and get the avg
+    phys_trans_data['month'] = phys_trans_data['trans_month'].apply(lambda x: calendar.month_name[x]) # get the month name
+    phys_trans_data['date'] = pd.to_datetime(("2020 " + phys_trans_data['month']), dayfirst=True) # convert the date into year, month
+    phys_trans_data.drop(columns=['trans_month', 'month'], axis=1, inplace=True) # drop the other columns
+
+    dig_trans_data = digital_2020.groupby('trans_month')['amt'].mean().to_frame(name='avg').reset_index() # group the transactions by month and get the avg
+    dig_trans_data['month'] = dig_trans_data['trans_month'].apply(lambda x: calendar.month_name[x]) # get the month name
+    dig_trans_data['date'] = pd.to_datetime(("2020 " + dig_trans_data['month']), dayfirst=True) # convert the date into year, month
+    dig_trans_data.drop(columns=['trans_month', 'month'], axis=1, inplace=True) # drop the other columns
+
+    # Get the average transactions made in 2021
+    phys_trans_data2 = physical_2021.groupby('trans_month')['amt'].mean().to_frame(name='avg').reset_index() # group the transactions by month and get the avg
+    phys_trans_data2['month'] = phys_trans_data2['trans_month'].apply(lambda x: calendar.month_name[x]) # get the month name
+    phys_trans_data2['date'] = pd.to_datetime(("2021 " + phys_trans_data2['month']), dayfirst=True) # convert the date into year, month
+    phys_trans_data2.drop(columns=['trans_month', 'month'], axis=1, inplace=True) # drop the other columns
+
+    dig_trans_data2 = digital_2021.groupby('trans_month')['amt'].mean().to_frame(name='avg').reset_index() # group the transactions by month and get the avg
+    dig_trans_data2['month'] = dig_trans_data2['trans_month'].apply(lambda x: calendar.month_name[x]) # get the month name
+    dig_trans_data2['date'] = pd.to_datetime(("2021 " + dig_trans_data2['month']), dayfirst=True) # convert the date into year, month
+    dig_trans_data2.drop(columns=['trans_month', 'month'], axis=1, inplace=True) # drop the other columns
+
+    # Combine and round the average number
+    phys_trans_data = pd.concat([phys_trans_data, phys_trans_data2], ignore_index=True) # combine the avg transactions made in 2020 and 2021
+    phys_trans_data['avg'] = phys_trans_data['avg'].apply(lambda x: round(x)) # round avg value
+    phys_trans_data = phys_trans_data.rename(columns={"avg": "Physical"}) # rename column
+    dig_trans_data = pd.concat([dig_trans_data, dig_trans_data2], ignore_index=True) # combine the avg transactions made in 2020 and 2021
+    dig_trans_data['avg'] = dig_trans_data['avg'].apply(lambda x: round(x)) # round avg value
+    dig_trans_data = dig_trans_data.rename(columns={"avg": "Digital"}) # rename column
+
+    # Combine into one dataframe
+    avg_trans = phys_trans_data.merge(dig_trans_data, on='date', how='inner')
+
+    # Plot
+    fig = px.line(avg_trans, x='date', y=['Physical', 'Digital'],
+                color_discrete_sequence=COLORS,
+                labels= {"variable": "Category Type"}
+                )
+
+    fig.update_layout(xaxis_title="", yaxis_title="",
+                    plot_bgcolor='white', paper_bgcolor='white')
     st.plotly_chart(fig, key=unique_key)
 
 # HTML Styles
@@ -357,6 +420,9 @@ elif my_page == 'Results':
 
         st.markdown("<h4>Catergory Level: Average Spending per Generation</h4>", unsafe_allow_html=True)
         cat_lvl_avg_spending_per_gen(c1_trans, "cluster1-category-avg")
+
+        st.markdown("<h4>Average Monthly Spending</h4>", unsafe_allow_html=True)
+        plot_avg_monthly_spending(c1_trans, "cluster1-avg-spending")
     
     # Dropdown for cluster 2
     with st.expander("🛒 **Epic Comeback Connoisseurs** *(cluster 2)*", expanded=False):
@@ -368,6 +434,9 @@ elif my_page == 'Results':
         st.markdown("<h4>Catergory Level: Average Spending per Generation</h4>", unsafe_allow_html=True)
         cat_lvl_avg_spending_per_gen(c2_trans, "cluster2-category-avg")
 
+        st.markdown("<h4>Average Monthly Spending</h4>", unsafe_allow_html=True)
+        plot_avg_monthly_spending(c2_trans, "cluster2-avg-spending")
+
     # Dropdown for cluster 3
     with st.expander("🛒 **Digital Dynamos** *(cluster 3)*", expanded=False):
         st.markdown("<h4>Physical vs Digital: Average Spending per Generation</h4>", unsafe_allow_html=True)
@@ -377,6 +446,9 @@ elif my_page == 'Results':
 
         st.markdown("<h4>Catergory Level: Average Spending per Generation</h4>", unsafe_allow_html=True)
         cat_lvl_avg_spending_per_gen(c3_trans, "cluster3-category-avg")
+
+        st.markdown("<h4>Average Monthly Spending</h4>", unsafe_allow_html=True)
+        plot_avg_monthly_spending(c3_trans, "cluster3-avg-spending")
     
     # Dropdown for cluster 5
     with st.expander("🛒 **Festive Spenders** *(cluster 5)*", expanded=False):
@@ -387,6 +459,9 @@ elif my_page == 'Results':
 
         st.markdown("<h4>Catergory Level: Average Spending per Generation</h4>", unsafe_allow_html=True)
         cat_lvl_avg_spending_per_gen(c5_trans, "cluster5-category-avg")
+
+        st.markdown("<h4>Average Monthly Spending</h4>", unsafe_allow_html=True)
+        plot_avg_monthly_spending(c5_trans, "cluster5-avg-spending")
     
     st.subheader("Summary of Findings and Recommendations")
 
