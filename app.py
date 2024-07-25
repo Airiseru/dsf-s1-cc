@@ -47,11 +47,11 @@ def phys_digi_avg_spending_per_gen(df, unique_key):
     )
 
     fig.add_trace(
-        go.Bar(name='Baby Boomers', x=avg_per_gen_type.index, y=avg_per_gen_type['Baby Boomers'], marker_color=COLORS[1])
+        go.Bar(name='Baby Boomers', x=avg_per_gen_type.index, y=avg_per_gen_type['Baby Boomers'], marker_color=COLORS[2])
     )
 
     fig.add_trace(
-        go.Bar(name='Generation X', x=avg_per_gen_type.index, y=avg_per_gen_type['Generation X'], marker_color=COLORS[2])
+        go.Bar(name='Generation X', x=avg_per_gen_type.index, y=avg_per_gen_type['Generation X'], marker_color=COLORS[1])
     )
 
     fig.update_layout(barmode='group')
@@ -76,11 +76,11 @@ def cat_lvl_avg_spending_per_gen(df, unique_key):
     )
 
     fig.add_trace(
-        go.Bar(name='Baby Boomers', x=avg_per_gen_cat['Baby Boomers'], y=avg_per_gen_cat.index, marker_color=COLORS[1], orientation='h')
+        go.Bar(name='Baby Boomers', x=avg_per_gen_cat['Baby Boomers'], y=avg_per_gen_cat.index, marker_color=COLORS[2], orientation='h')
     )
 
     fig.add_trace(
-        go.Bar(name='Generation X', x=avg_per_gen_cat['Generation X'], y=avg_per_gen_cat.index, marker_color=COLORS[2], orientation='h')
+        go.Bar(name='Generation X', x=avg_per_gen_cat['Generation X'], y=avg_per_gen_cat.index, marker_color=COLORS[1], orientation='h')
     )
     
     fig.update_layout(barmode='group')
@@ -409,9 +409,31 @@ elif my_page == 'Results':
 
     # Dropdown for cluster 1
     with st.expander("🛒 **Cyber Savvy Shoppers** *(cluster 1)*", expanded=False):
-        st.markdown("<h4>Physical vs Digital: Average Spending per Generation</h4>", unsafe_allow_html=True)
         c1_trans = df_with_label[df_with_label['labels'] == 1]
         c1_users = unique_holders[unique_holders['labels'] == 1]
+
+        st.markdown("<h4>General Information about the Customers in the Cluster</h4><br>", unsafe_allow_html=True)
+        info_dict = {"Number of Transactions": len(c1_trans),
+                    "Number of Users": len(c1_users),
+                    "Minimum Age": c1_users['age'].min(),
+                    "Mean Age": np.round(c1_users['age'].mean(), 2),
+                    "Maximum Age": c1_users['age'].max()
+                    }
+        
+        info_array = np.array(list(info_dict.items()))
+        info_df = pd.DataFrame(info_array)
+        info_df.columns = ["Info", "Value"]
+        info_df.set_index("Info", inplace=True)
+        st.table(info_df)
+
+        generation_counts = c1_users['generation'].value_counts()
+        generation_df = pd.DataFrame(generation_counts)
+
+        st.markdown("<h4>Distribution of Customer per Generation</h4>", unsafe_allow_html=True)
+        fig = go.Figure(go.Bar(x=generation_df.index, y=generation_df['count'], marker_color=COLORS[2::-1]))
+        st.plotly_chart(fig, key="c1-cluster-info")
+
+        st.markdown("<h4>Physical vs Digital: Average Spending per Generation</h4>", unsafe_allow_html=True)
         phys_digi_avg_spending_per_gen(c1_trans, "cluster1-digi-vs-phys")
 
         st.markdown("<h4>Catergory Level: Average Spending per Generation</h4>", unsafe_allow_html=True)
@@ -422,9 +444,31 @@ elif my_page == 'Results':
     
     # Dropdown for cluster 2
     with st.expander("🛒 **Epic Comeback Connoisseurs** *(cluster 2)*", expanded=False):
-        st.markdown("<h4>Physical vs Digital: Average Spending per Generation</h4>", unsafe_allow_html=True)
         c2_trans = df_with_label[df_with_label['labels'] == 2]
         c2_users = unique_holders[unique_holders['labels'] == 2]
+
+        st.markdown("<h4>General Information about the Customers in the Cluster</h4><br>", unsafe_allow_html=True)
+        info_dict = {"Number of Transactions": len(c2_trans),
+                    "Number of Users": len(c2_users),
+                    "Minimum Age": c2_users['age'].min(),
+                    "Mean Age": np.round(c2_users['age'].mean(), 2),
+                    "Maximum Age": c2_users['age'].max()
+                    }
+        
+        info_array = np.array(list(info_dict.items()))
+        info_df = pd.DataFrame(info_array)
+        info_df.columns = ["Info", "Value"]
+        info_df.set_index("Info", inplace=True)
+        st.table(info_df)
+
+        generation_counts = c2_users['generation'].value_counts()
+        generation_df = pd.DataFrame(generation_counts)
+
+        st.markdown("<h4>Distribution of Customer per Generation</h4>", unsafe_allow_html=True)
+        fig = go.Figure(go.Bar(x=generation_df.index, y=generation_df['count'], marker_color=COLORS[2::-1]))
+        st.plotly_chart(fig, key="c2-cluster-info")
+
+        st.markdown("<h4>Physical vs Digital: Average Spending per Generation</h4>", unsafe_allow_html=True)
         phys_digi_avg_spending_per_gen(c2_trans, "cluster2-digi-vs-phys")
 
         st.markdown("<h4>Catergory Level: Average Spending per Generation</h4>", unsafe_allow_html=True)
@@ -435,9 +479,31 @@ elif my_page == 'Results':
 
     # Dropdown for cluster 3
     with st.expander("🛒 **Digital Dynamos** *(cluster 3)*", expanded=False):
-        st.markdown("<h4>Physical vs Digital: Average Spending per Generation</h4>", unsafe_allow_html=True)
         c3_trans = df_with_label[df_with_label['labels'] == 3]
         c3_users = unique_holders[unique_holders['labels'] == 3]
+
+        st.markdown("<h4>General Information about the Customers in the Cluster</h4><br>", unsafe_allow_html=True)
+        info_dict = {"Number of Transactions": len(c3_trans),
+                    "Number of Users": len(c3_users),
+                    "Minimum Age": c3_users['age'].min(),
+                    "Mean Age": np.round(c3_users['age'].mean(), 2),
+                    "Maximum Age": c3_users['age'].max()
+                    }
+        
+        info_array = np.array(list(info_dict.items()))
+        info_df = pd.DataFrame(info_array)
+        info_df.columns = ["Info", "Value"]
+        info_df.set_index("Info", inplace=True)
+        st.table(info_df)
+
+        generation_counts = c3_users['generation'].value_counts()
+        generation_df = pd.DataFrame(generation_counts)
+
+        st.markdown("<h4>Distribution of Customer per Generation</h4>", unsafe_allow_html=True)
+        fig = go.Figure(go.Bar(x=generation_df.index, y=generation_df['count'], marker_color=COLORS[2::-1]))
+        st.plotly_chart(fig, key="c3-cluster-info")
+
+        st.markdown("<h4>Physical vs Digital: Average Spending per Generation</h4>", unsafe_allow_html=True)
         phys_digi_avg_spending_per_gen(c3_trans, "cluster3-digi-vs-phys")
 
         st.markdown("<h4>Catergory Level: Average Spending per Generation</h4>", unsafe_allow_html=True)
@@ -448,9 +514,31 @@ elif my_page == 'Results':
     
     # Dropdown for cluster 5
     with st.expander("🛒 **Festive Spenders** *(cluster 5)*", expanded=False):
-        st.markdown("<h4>Physical vs Digital: Average Spending per Generation</h4>", unsafe_allow_html=True)
         c5_trans = df_with_label[df_with_label['labels'] == 5]
         c5_users = unique_holders[unique_holders['labels'] == 5]
+
+        st.markdown("<h4>General Information about the Customers in the Cluster</h4><br>", unsafe_allow_html=True)
+        info_dict = {"Number of Transactions": len(c5_trans),
+                    "Number of Users": len(c5_users),
+                    "Minimum Age": c5_users['age'].min(),
+                    "Mean Age": np.round(c5_users['age'].mean(), 2),
+                    "Maximum Age": c5_users['age'].max()
+                    }
+        
+        info_array = np.array(list(info_dict.items()))
+        info_df = pd.DataFrame(info_array)
+        info_df.columns = ["Info", "Value"]
+        info_df.set_index("Info", inplace=True)
+        st.table(info_df)
+
+        generation_counts = c5_users['generation'].value_counts()
+        generation_df = pd.DataFrame(generation_counts)
+
+        st.markdown("<h4>Distribution of Customer per Generation</h4>", unsafe_allow_html=True)
+        fig = go.Figure(go.Bar(x=generation_df.index, y=generation_df['count'], marker_color=COLORS[2::-1]))
+        st.plotly_chart(fig, key="c5-cluster-info")
+
+        st.markdown("<h4>Physical vs Digital: Average Spending per Generation</h4>", unsafe_allow_html=True)
         phys_digi_avg_spending_per_gen(c5_trans, "cluster5-digi-vs-phys")
 
         st.markdown("<h4>Catergory Level: Average Spending per Generation</h4>", unsafe_allow_html=True)
