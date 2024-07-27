@@ -529,14 +529,22 @@ elif my_page == 'Results':
         fig = go.Figure(go.Bar(x=generation_df.index, y=generation_df['count'], marker_color=COLORS[2::-1]))
         st.plotly_chart(fig, key="c3-cluster-info")
 
+        st.markdown("Majority of the customers of this class are from the Baby Boomers generation with an equal amount of Generation X and Silent Generation. This cluster has a high recency, frequency, and high monetary value, which is similar to the first cluster. The difference is that this cluster had a higher frquency and monetary value, **making them the most elite of the elite customers**.")
+
         st.markdown("<h4>Physical vs Digital: Average Spending per Generation</h4>", unsafe_allow_html=True)
         phys_digi_avg_spending_per_gen(c3_trans, "cluster3-digi-vs-phys")
+
+        st.markdown("From this graph, again, across the generations, we see that the **average spending on digital categories is greater than any other categories**. The difference from the first cluster is that the overall average spending for all types of categories are slightly greater.", unsafe_allow_html=True)
 
         st.markdown("<h4>Catergory Level: Average Spending per Generation</h4>", unsafe_allow_html=True)
         cat_lvl_avg_spending_per_gen(c3_trans, "cluster3-category-avg")
 
+        st.markdown("Looking into the average monthly spending per category, the graph shows that **all generations have a high average on Online Shopping and Travel**. Aside from Shopping, the average monthly spending between online categories and physical categories are close, which indicates that for this cluster, **they tend to use their card either way** (online or physical).", unsafe_allow_html=True)
+
         st.markdown("<h4>Average Monthly Spending</h4>", unsafe_allow_html=True)
         plot_avg_monthly_spending(c3_trans, "cluster3-avg-spending")
+
+        st.markdown("Overall, the **average monthly spending on digital categories** across the the whole timeline of the transaction history is **greater than** then physical categories. We also notice a lot of dips and sudden spikes on the monthly spending in digital transactions. This may indicate that this cluster may prefer **online means depending on the season or possible deals and offers available in the online medium**. But, we also see that for both years, **there is a spike in the month of April**, which the company can capitalize on. Further analysis on the transaction history could reveal more patterns between the spending behavior depending on the season or month.<br><br>Based on the graph, **there is also a constant average spending on physical categoreies**, which is another aspect the company can focus on. That is, instead of solely focusing on online deals and promotions, the company can continuously capitalize on the consistent physical spending to help maintain (or grow) the cluster's high monetary value.", unsafe_allow_html=True)
     
     # Dropdown for cluster 5
     with st.expander("🛒 **Festive Spenders** *(cluster 5)*", expanded=False):
