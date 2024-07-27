@@ -433,14 +433,22 @@ elif my_page == 'Results':
         fig = go.Figure(go.Bar(x=generation_df.index, y=generation_df['count'], marker_color=COLORS[2::-1]))
         st.plotly_chart(fig, key="c1-cluster-info")
 
+        st.write("Majority of the customers of this class are from the Baby Boomers generation. Note that this cluster had a high recency, high frquency, and high monetary value. Which means that this cluster is the cream of the crop of the company, they are the highest valued customers.")
+
         st.markdown("<h4>Physical vs Digital: Average Spending per Generation</h4>", unsafe_allow_html=True)
         phys_digi_avg_spending_per_gen(c1_trans, "cluster1-digi-vs-phys")
+
+        st.markdown("From this graph, we notice that across the generations, the average spending on digital categories is greater than any other categories. Interestingly enough, the **average spending of the Silent Generation in the digital category is equal to the average spending of the Baby Boomers** even though there is <u>significantly more Baby Boomers</u> in this cluster.", unsafe_allow_html=True)
 
         st.markdown("<h4>Catergory Level: Average Spending per Generation</h4>", unsafe_allow_html=True)
         cat_lvl_avg_spending_per_gen(c1_trans, "cluster1-category-avg")
 
+        st.markdown("In terms of specific categories across the generations, majority of the spendings are still on digital categories. Specifically for Baby Boomers and Generation X, they tend to spend more on Online Shopping while the Silent Generation tends to spend more on the Online Miscellaneous category.<br><br>This simply indicates that for this cluster, they tend to use their card and spend more through online methods rather than physical components. However, it doesn't mean that these generations don't spend their cards for physical categories. In fact, it can be seen that for all generations, they tend to spend more for categories such as Physical Grocery compared to its counterpart (Online Grocery).", unsafe_allow_html=True)
+
         st.markdown("<h4>Average Monthly Spending</h4>", unsafe_allow_html=True)
         plot_avg_monthly_spending(c1_trans, "cluster1-avg-spending")
+
+        st.markdown("Overall, the **average monthly spending on digital categories** across the the whole timeline of the transaction history is **greater than** then physical categories, especially in the month of October. This may indicate that this cluster tend to use their cards more in the month of October, which the company can capitalize on by <u>doing more promotions and offers for online products</u> in this month.<br><br>Furthermore, it can be seen that for the month of November and the start of December, this cluster tends to spend their cards more on physical transactions rather than digital. This may imply that **during the Christmas season, this cluster may tend to go out and use their cards as they physically meet people**, which can potentially be another marketing approach for the company. Specifically, the company can <u>offer discounts or special deals for the Christmas season</u>.", unsafe_allow_html=True)
     
     # Dropdown for cluster 2
     with st.expander("🛒 **Epic Comeback Connoisseurs** *(cluster 2)*", expanded=False):
