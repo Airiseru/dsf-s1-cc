@@ -34,7 +34,7 @@ def get_category_type(cat):
     else:
         return "Others"
 
-def phys_digi_avg_spending_per_gen(df, unique_key):
+def phys_digi_avg_spending_per_gen(df, unique_key, greatest_gen=False):
     avg_per_gen_type = pd.pivot_table(df, values='amt', index='category_type', columns='generation')
 
     # Turn the values into whole numbers
@@ -54,11 +54,16 @@ def phys_digi_avg_spending_per_gen(df, unique_key):
         go.Bar(name='Generation X', x=avg_per_gen_type.index, y=avg_per_gen_type['Generation X'], marker_color=COLORS[1])
     )
 
+    if greatest_gen:
+        fig.add_trace(
+            go.Bar(name='Greatest Generation', x=avg_per_gen_type.index, y=avg_per_gen_type['Greatest Generation'], marker_color="black")
+        )
+
     fig.update_layout(barmode='group')
     st.plotly_chart(fig, key=unique_key)
 
 
-def cat_lvl_avg_spending_per_gen(df, unique_key):
+def cat_lvl_avg_spending_per_gen(df, unique_key, greatest_gen=False):
     avg_per_gen_cat = pd.pivot_table(df, values='amt', index='category', columns='generation')
 
     # Turn the values into whole numbers
@@ -82,6 +87,11 @@ def cat_lvl_avg_spending_per_gen(df, unique_key):
     fig.add_trace(
         go.Bar(name='Generation X', x=avg_per_gen_cat['Generation X'], y=avg_per_gen_cat.index, marker_color=COLORS[1], orientation='h')
     )
+
+    if greatest_gen:
+       fig.add_trace(
+            go.Bar(name='Greatest Generation', x=avg_per_gen_cat['Greatest Generation'], y=avg_per_gen_cat.index, marker_color='black', orientation='h')
+        ) 
     
     fig.update_layout(barmode='group')
     st.plotly_chart(fig, key=unique_key)
@@ -476,14 +486,22 @@ elif my_page == 'Results':
         fig = go.Figure(go.Bar(x=generation_df.index, y=generation_df['count'], marker_color=COLORS[2::-1]))
         st.plotly_chart(fig, key="c2-cluster-info")
 
+        st.markdown("Majority of the customers of this class are from the Baby Boomers generation as well. But the difference is that there are also customers who are part of the Greatest Generation, which are those who are of age 95 and above. Note that this cluster had a medium recency, low frquency, and low monetary value which means that this cluster **contains the customers who are slowly using their cards less**.")
+
         st.markdown("<h4>Physical vs Digital: Average Spending per Generation</h4>", unsafe_allow_html=True)
-        phys_digi_avg_spending_per_gen(c2_trans, "cluster2-digi-vs-phys")
+        phys_digi_avg_spending_per_gen(c2_trans, "cluster2-digi-vs-phys", True)
+
+        st.markdown("From this graph, we notice that across the generations, the **average spending on digital categories is greater than any other categories, except for Generation X**. For this generation, they tend to **spend more on the others categories**, with the digital category coming close. For the Greatest Generation, we see that they spend on Physical and Digital Categories almost equally.", unsafe_allow_html=True)
 
         st.markdown("<h4>Catergory Level: Average Spending per Generation</h4>", unsafe_allow_html=True)
-        cat_lvl_avg_spending_per_gen(c2_trans, "cluster2-category-avg")
+        cat_lvl_avg_spending_per_gen(c2_trans, "cluster2-category-avg", True)
+
+        st.markdown("From further examination, we see that majority of the **average monthly spendings are indeed on online categories** such as Online Shopping and Online Miscellaneous. However, we can also see that these set of customers **spend little to no money on a lot of categories**, especially the **categories that may not be as essential** to them anymore such as travel, entertainment, etc. Also, for the **Greatest Generation, we see that they frequently spend a lot on both the Physical and Online Shopping**, which may suggest that this generation just loves to shop in general.", unsafe_allow_html=True)
 
         st.markdown("<h4>Average Monthly Spending</h4>", unsafe_allow_html=True)
         plot_avg_monthly_spending(c2_trans, "cluster2-avg-spending")
+
+        st.markdown("Overall, the **average monthly spending on digital categories** across the the whole timeline of the transaction history is **greater than** then physical categories. However, we notice a negative trend over the year, then a sudden spike, and slowly decline again. This may indicate that for certain periods, the cluster will **suddenly splurge and use their cards but as time passes, they will use their cards less**. This may be resisted by offering promotions or deals when the company notices a sudden decline of card usage for this cluster. The promotions should be done such that it encourages the cluster to use their card, especially through the categories they frequent in such as Online Shopping.", unsafe_allow_html=True)
 
     # Dropdown for cluster 3
     with st.expander("🛒 **Digital Dynamos** *(cluster 3)*", expanded=False):
@@ -547,10 +565,10 @@ elif my_page == 'Results':
         st.plotly_chart(fig, key="c5-cluster-info")
 
         st.markdown("<h4>Physical vs Digital: Average Spending per Generation</h4>", unsafe_allow_html=True)
-        phys_digi_avg_spending_per_gen(c5_trans, "cluster5-digi-vs-phys")
+        phys_digi_avg_spending_per_gen(c5_trans, "cluster5-digi-vs-phys", True)
 
         st.markdown("<h4>Catergory Level: Average Spending per Generation</h4>", unsafe_allow_html=True)
-        cat_lvl_avg_spending_per_gen(c5_trans, "cluster5-category-avg")
+        cat_lvl_avg_spending_per_gen(c5_trans, "cluster5-category-avg", True)
 
         st.markdown("<h4>Average Monthly Spending</h4>", unsafe_allow_html=True)
         plot_avg_monthly_spending(c5_trans, "cluster5-avg-spending")
