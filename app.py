@@ -529,7 +529,7 @@ elif my_page == 'Results':
         fig = go.Figure(go.Bar(x=generation_df.index, y=generation_df['count'], marker_color=COLORS[2::-1]))
         st.plotly_chart(fig, key="c3-cluster-info")
 
-        st.markdown("Majority of the customers of this class are from the Baby Boomers generation with an equal amount of Generation X and Silent Generation. This cluster has a high recency, frequency, and high monetary value, which is similar to the first cluster. The difference is that this cluster had a higher frquency and monetary value, **making them the most elite of the elite customers**.")
+        st.markdown("Majority of the customers of this class are from the Baby Boomers generation with an equal amount of Generation X and Silent Generation. This cluster has a high recency, high frequency, and high monetary value, which is similar to the first cluster. The difference is that this cluster had a higher frquency and monetary value, **making them the most elite of the elite customers**.")
 
         st.markdown("<h4>Physical vs Digital: Average Spending per Generation</h4>", unsafe_allow_html=True)
         phys_digi_avg_spending_per_gen(c3_trans, "cluster3-digi-vs-phys")
@@ -572,14 +572,22 @@ elif my_page == 'Results':
         fig = go.Figure(go.Bar(x=generation_df.index, y=generation_df['count'], marker_color=COLORS[2::-1]))
         st.plotly_chart(fig, key="c5-cluster-info")
 
+        st.markdown("Majority of the customers of this class are from the Baby Boomers generation with a decent amount from Generation X and Silent Generation and one user from the Greatest Generation. This cluster has a high recency, medium frequency, and medium monetary value, which makes this set of customers the typical customers of the company that **moderately uses their cards but more than the average customer**.")
+
         st.markdown("<h4>Physical vs Digital: Average Spending per Generation</h4>", unsafe_allow_html=True)
         phys_digi_avg_spending_per_gen(c5_trans, "cluster5-digi-vs-phys", True)
+
+        st.markdown("From this graph, again, across the generations, we see that the **average spending on digital categories is greater than any other categories**. Also, we notice that across the different types of catergories, the **average spending of the customer in the Greatest Generation is close or exceeds the average spending of the other generations** despite there being less customers in that generation.", unsafe_allow_html=True)
 
         st.markdown("<h4>Catergory Level: Average Spending per Generation</h4>", unsafe_allow_html=True)
         cat_lvl_avg_spending_per_gen(c5_trans, "cluster5-category-avg", True)
 
+        st.markdown("Doing a further examination into the specific categories, the graph shows that **all generations have a high average on Online Categories**. Furthermore, we see a **high average monthly spending on the Travel category for the Greatest Generation**, which shows a possible marketing angle the company could take for this generation in this cluster (or for that sole customer). Other than that, there is a more or less moderate spending on all categories which indicate that **even if this cluster doesn't spend that much, they still use their cards for any type of purchases** (whether it's online or physical).", unsafe_allow_html=True)
+
         st.markdown("<h4>Average Monthly Spending</h4>", unsafe_allow_html=True)
         plot_avg_monthly_spending(c5_trans, "cluster5-avg-spending")
+
+        st.markdown("Overall, the **average monthly spending on digital categories** across the the whole timeline of the transaction history is **greater than** then physical categories. There is a particularly high spike on digital transactions in the month of January 2021, which may need further examination. The graph showcases that in some months, this cluster mainly uses their card for physical transactions but whenever they use it for these types of transactions, they spend little to none. However, **when they spend on digital categories, they seem to have an overall higher average monthly spending**. The company can take advantage of this by doing <u>promotions and deals for online transactions to further increase</u> the average monthly spending on these types of transactions.", unsafe_allow_html=True)
     
     st.subheader("Summary of Findings and Recommendations")
 
