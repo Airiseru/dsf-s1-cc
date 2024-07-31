@@ -596,3 +596,9 @@ elif my_page == 'Results':
 
 elif my_page == "Summary":
     st.write('___')
+    st.subheader("Summary Table")
+    st.image("images/summary-table.png")
+    st.markdown("To summarize, K-Means clustering was done to group the customers of Adobo Advantage Cards based on their transaction history. From this, **6 clusters** were identified where 2 were considered as disengaged while the remaining were **subjected to further profiling** to provide recommendations.")
+    st.subheader("Future Recommendations")
+    st.markdown("From this, we recommend the following to conduct a better analysis:\n- increase transaction history period\n- define the mode of transactions (physical vs digital)")
+    st.write("Furthermore, it is encouraged to hold campaigns to attract the younger generations as all of the customers of AAC are part of the older generations (50 and above) which is not sustainable for the company's profit and growth.")
