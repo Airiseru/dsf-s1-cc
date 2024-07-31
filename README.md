@@ -6,7 +6,7 @@ This was a project done inline with Eskwelab's Data Science Fellowship Cohort 13
 
 The main objective of the project is to learn more about a bank's customers based on their transaction history. Specifically, we look at what the company can do to improve their businesses based on the different type of customers they have. This was done by analyzing their RFM (Recency, Frequency, Monetary) values and perform clustering from those values. After which, specific action plans or recommendations were made for each cluster.
 
-To learn more about the methodology, the [Jupyter Notebook](https://github.com/Airiseru/dsf-s1-cc/blob/main/cc-project-nb.ipynb) or [Streamlit App]() is available for viewing.
+To learn more about the methodology, the [Jupyter Notebook](https://github.com/Airiseru/dsf-s1-cc/blob/main/cc-project-nb.ipynb) or [Streamlit App](https://aac-analysis.streamlit.app/) is available for viewing.
 
 ## Results
 
